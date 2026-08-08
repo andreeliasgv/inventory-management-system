@@ -166,7 +166,7 @@ namespace InventoryManagementSystem
 
 							System.Console.Clear();
 							codigo = Read("Codigo do produto:\n> ");
-							quantidade = ReadDecimal(Read("Quantidade em estoque:\n> "));
+							quantidade = ReadDecimal(Read("Quantidade a adicionar:\n> "));
 							estoque.AdicionarEstoque(codigo, quantidade);
 							break;
 						case 5:
@@ -174,7 +174,7 @@ namespace InventoryManagementSystem
 
 							System.Console.Clear();
 							codigo = Read("Codigo do produto:\n> ");
-							quantidade = ReadDecimal(Read("Quantidade em estoque:\n> "));
+							quantidade = ReadDecimal(Read("Quantidade a retirar:\n> "));
 							estoque.RemoverEstoque(codigo, quantidade);
 							break;
 						case 6:
@@ -193,10 +193,18 @@ namespace InventoryManagementSystem
 							if (produtosEstoqueBaixo.Count > 0)
 							{
 								System.Console.WriteLine();
+								System.Console.WriteLine("======================================");
+								if (produtosEstoqueBaixo.Count > 1)
+								{
+								System.Console.WriteLine($" ======= {produtosEstoqueBaixo.Count} PRODUTOS EM FALTA ======== ");
+								}
+								else
+								{
+								System.Console.WriteLine($" ======== {produtosEstoqueBaixo.Count} PRODUTO EM FALTA ======== ");
+								}
+								System.Console.WriteLine("======================================");
 								for (int i = 0; i < produtosEstoqueBaixo.Count; i++)
 								{
-									System.Console.WriteLine("======================================");
-									System.Console.WriteLine($" ======== PRODUTO {i + 1} EM FALTA ======== ");
 									System.Console.WriteLine("======================================");
 									System.Console.WriteLine(produtosEstoqueBaixo[i].ToString());
 								}
