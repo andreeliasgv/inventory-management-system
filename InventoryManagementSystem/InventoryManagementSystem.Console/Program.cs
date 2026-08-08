@@ -230,7 +230,8 @@ namespace InventoryManagementSystem
 				{
 					System.Console.WriteLine();
 					Thread.Sleep(150);
-					Read("Pressione Enter para prosseguir...");
+					System.Console.Write("Pressione qualquer tecla para prosseguir...");
+					System.Console.ReadKey(true);
 					Thread.Sleep(150);
 					System.Console.Clear();
 				}
