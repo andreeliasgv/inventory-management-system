@@ -1,8 +1,8 @@
-﻿using InventoryManagementSystem.Console.Models;
+﻿using InventoryManagementSystem.Core.Models;
 
-namespace InventoryManagementSystem.Console.Services
+namespace InventoryManagementSystem.Core.Services
 {
-	internal class ServicoEstoque
+	public class ServicoEstoque
 	{
 		private readonly List<Produto> _listaProdutos = new();
 

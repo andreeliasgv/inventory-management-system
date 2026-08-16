@@ -1,6 +1,6 @@
-﻿namespace InventoryManagementSystem.Console.Models
+﻿namespace InventoryManagementSystem.Core.Models
 {
-	internal class Produto
+	public class Produto
 	{
 		private string _codigo;
 		private string _nome;
