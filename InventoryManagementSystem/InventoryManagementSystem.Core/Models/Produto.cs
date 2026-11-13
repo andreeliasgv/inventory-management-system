@@ -1,12 +1,19 @@
-﻿namespace InventoryManagementSystem.Core.Models
+﻿using InventoryManagementSystem.Core.Enums.Produto;
+
+namespace InventoryManagementSystem.Core.Models
 {
 	public class Produto
 	{
-		private string _codigo;
-		private string _nome;
+		private string _codigo = string.Empty;
+		private string _nome = string.Empty;
 		private decimal _quantidade;
 		private decimal _estoqueMinimo;
 		private decimal _preco;
+		private StatusProduto _status;
+
+
+		public int Id
+		{ get; private set; }
 
 		public string Codigo
 		{
@@ -18,7 +25,14 @@
 					throw new ArgumentException("O código do produto deve ser informado!");
 				}
 
-				_codigo = value.Trim();
+				string codigo = value.Trim().ToUpperInvariant();
+
+				if (codigo.Length > 50)
+				{
+					throw new ArgumentException("O código deverá conter até 50 caracteres.");
+				}
+
+				_codigo = codigo;
 			}
 		}
 		public string Nome
@@ -31,7 +45,14 @@
 					throw new ArgumentException("O nome do produto deve ser informado!");
 				}
 
-				_nome = value.Trim();
+				string nome = value.Trim();
+
+				if (nome.Length > 150)
+				{
+					throw new ArgumentException("O nome não pode ultrapassar 150 caracteres.");
+				}
+
+				_nome = nome;
 			}
 		}
 		public decimal Quantidade
@@ -87,6 +108,23 @@
 			}
 		}
 
+		public DateTime DataCadastro
+		{ get; private set; }
+
+		public StatusProduto Status
+		{
+			get { return _status; }
+			private set
+			{
+				if (!Enum.IsDefined(typeof(StatusProduto), value))
+				{
+					throw new ArgumentOutOfRangeException(nameof(value), value, "O status informado é inválido");
+				}
+
+				_status = value;
+			}
+		}
+
 		public Produto(string codigo, string nome, decimal quantidade, decimal estoqueMinimo, decimal preco)
 		{
 			Codigo = codigo;
@@ -94,6 +132,7 @@
 			Quantidade = quantidade;
 			EstoqueMinimo = estoqueMinimo;
 			Preco = preco;
+			Status = StatusProduto.Ativo;
 		}
 
 		public void AdicionarEstoque(decimal quantidade)
@@ -129,6 +168,21 @@
 		public void AlterarEstoqueMinimo(decimal novoEstoqueMinimo)
 		{
 			EstoqueMinimo = novoEstoqueMinimo;
+		}
+
+		public void Ativar()
+		{
+			Status = StatusProduto.Ativo;
+		}
+
+		public void Inativar()
+		{
+			if (Quantidade != 0)
+			{
+				throw new InvalidOperationException("Um produto com saldo em estoque não pode ser inativado!");
+			}
+
+			Status = StatusProduto.Inativo;
 		}
 
 		public override string ToString()
